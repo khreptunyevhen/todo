@@ -61,6 +61,19 @@ function App() {
         >
           Add
         </button>
+        <button
+          onClick={(event) => {
+            event.preventDefault();
+
+            setItems({
+              tasks: [],
+              isDone: [],
+              isDisabled: [],
+            });
+          }}
+        >
+          Reset
+        </button>
       </form>
 
       <div>
