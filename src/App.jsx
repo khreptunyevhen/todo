@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { getCurrentDate } from "./common/currentDate";
 
 function App() {
   let [input, setInput] = useState("");
@@ -19,12 +20,17 @@ function App() {
 
   const { tasks, isDone, isDisabled } = items;
 
+  const today = getCurrentDate();
+
   return (
-    <div className="app">
-      <h1>My Todo</h1>
+    <div className="w-96 mx-auto mt-10 bg-white p-10 rounded-3xl drop-shadow-lg">
+      <h1 className="font-bold text 2xl border-b pb-4 mb-4">
+        <span className="border-b-4 border-black pb-4">Today's Task</span>
+      </h1>
 
       <form>
         <h2>Add Item</h2>
+        <span>{today}</span>
         <input
           type="text"
           placeholder="Title"
@@ -62,6 +68,7 @@ function App() {
           Add
         </button>
         <button
+          className=""
           onClick={(event) => {
             event.preventDefault();
 
