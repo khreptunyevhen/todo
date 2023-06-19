@@ -24,78 +24,86 @@ function App() {
 
   return (
     <div className="w-96 mx-auto mt-10 bg-white p-10 rounded-3xl drop-shadow-lg">
-      <h1 className="font-bold text 2xl border-b pb-4 mb-4">
-        <span className="border-b-4 border-black pb-4">Today's Task</span>
+      <h1 className="font-bold border-b pb-3 mb-4">
+        <span className="border-b-4 border-black pb-3">Today's Task</span>
       </h1>
 
       <form>
-        <h2>Add Item</h2>
-        <span>{today}</span>
+        <div className="mb-4">
+          <h2 className="font-bold text-2xl">Today's Task</h2>
+          <span className="text-primary">{today}</span>
+        </div>
         <input
+          className="w-full p-4 mb-4 shadow-lg shadow-primary rounded-lg outline-none"
           type="text"
-          placeholder="Title"
+          placeholder="Your task here..."
           value={input}
           onChange={(event) => {
             setInput(event.target.value);
           }}
         />
-        <button
-          onClick={(event) => {
-            event.preventDefault();
+        <div className="flex items-center justify-between space-x-2 mb-4">
+          <button
+            className="w-1/2 text-center text-secondary font-bold bg-blue-100 py-3 rounded-lg duration-200 hover:scale-[1.05]"
+            onClick={(event) => {
+              event.preventDefault();
 
-            input = input.trim();
+              input = input.trim();
 
-            if (!input) {
-              return;
-            }
+              if (!input) {
+                return;
+              }
 
-            if (tasks.includes(input)) {
-              return;
-            }
+              if (tasks.includes(input)) {
+                return;
+              }
 
-            const newItems = [...tasks];
-            newItems.push(input);
+              const newItems = [...tasks];
+              newItems.push(input);
 
-            setItems({
-              ...items,
-              tasks: newItems,
-              isDone: [...isDone, false],
-              isDisabled: [...isDisabled, false],
-            });
-            setInput("");
-          }}
-        >
-          Add
-        </button>
-        <button
-          className=""
-          onClick={(event) => {
-            event.preventDefault();
+              setItems({
+                ...items,
+                tasks: newItems,
+                isDone: [...isDone, false],
+                isDisabled: [...isDisabled, false],
+              });
+              setInput("");
+            }}
+          >
+            + New Task
+          </button>
+          <button
+            className="w-1/2 text-center text-alert font-bold bg-orange-100 py-3 rounded-lg duration-200 hover:scale-[1.05]"
+            onClick={(event) => {
+              event.preventDefault();
 
-            setItems({
-              tasks: [],
-              isDone: [],
-              isDisabled: [],
-            });
-          }}
-        >
-          Reset
-        </button>
+              setItems({
+                tasks: [],
+                isDone: [],
+                isDisabled: [],
+              });
+            }}
+          >
+            Reset All
+          </button>
+        </div>
       </form>
 
       <div>
-        <h2>My Items</h2>
-        <ul>
+        <h2 className="font-bold">My Tasks</h2>
+        <span className="inline-block mb-4 italic text-sm text-orange-200">
+          *double click to edit
+        </span>
+        {!tasks.length && <p>Looks like you have no tasks...</p>}
+        <ul className="flex flex-col space-y-4">
           {tasks.map((item, index) => {
             return (
               <li
-                key={`item-${index}`}
+                className="relative p-4 shadow-lg shadow-primary rounded-lg"
                 style={{
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "space-between",
-                  width: "200px",
+                  backgroundColor: isDone[index] ? "#EFF1F6" : "white",
                 }}
+                key={`item-${index}`}
               >
                 <p
                   style={{
@@ -115,8 +123,18 @@ function App() {
                     setItems({ ...items, isDisabled: newIsDisabled });
                   }}
                 >
-                  <span>{index + 1}</span>
+                  <span
+                    className={
+                      isDone[index]
+                        ? "text-primary inline-block mr-2 decoration-red"
+                        : "text-black inline-block mr-2 decoration-red"
+                    }
+                  >{`${index + 1}.`}</span>
                   <input
+                    className={isDone[index] ? "text-primary" : "text-black"}
+                    style={{
+                      backgroundColor: isDone[index] ? "#EFF1F6" : "white",
+                    }}
                     type="text"
                     value={item}
                     disabled={!isDisabled[index]}
@@ -129,8 +147,9 @@ function App() {
                     }}
                   />
                 </p>
-                <div>
+                <div className="absolute flex space-x-4 right-4 top-[28%]">
                   <button
+                    className=" duration-200 hover:scale-[1.05]"
                     onClick={() => {
                       const newIsDone = [...isDone];
                       newIsDone[index] = !isDone[index];
@@ -138,9 +157,10 @@ function App() {
                       setItems({ ...items, isDone: newIsDone });
                     }}
                   >
-                    d
+                    ✔
                   </button>
                   <button
+                    className="w-6 h-6 font-bold text-white bg-danger leading-[18px] rounded-full duration-200 hover:scale-[1.05]"
                     onClick={() => {
                       const newItems = [...tasks];
                       const newIsDone = [...isDone];

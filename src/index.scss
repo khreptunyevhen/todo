@@ -4,6 +4,10 @@
 
 @layer base {
   body {
-    @apply h-screen bg-gradient-to-t from-[#B7BAC4] to-[#E7E9ED];
+    @apply min-h-screen bg-gradient-to-t from-[#B7BAC4] to-[#E7E9ED];
   }
+}
+
+input[disabled] {
+  @apply bg-white;
 }
