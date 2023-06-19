@@ -9,6 +9,8 @@ module.exports = {
         alert: "#E9A21C",
         danger: "#FE5C3B",
         success: "#2BBB4D",
+        darkGradient: "#B7BAC4",
+        ligthGradient: "#E7E9ED",
       },
     },
   },
